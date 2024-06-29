@@ -1,101 +1,49 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import httpStatus from 'http-status';
-import AppError from '../../errors/AppError';
-import { Blog } from '../blog/blog.model';
-import { Sale } from './project.model';
 
-const createSalesIntoDB = async (Data: any) => {
-  const { productId, quantity, buyerName, saleDate } = Data;
+import { TProject } from './project.interface';
+import { Project } from './project.model';
 
-  // Validate product existence
-  const productData = await Blog.findById(productId);
-  if (!productData) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Product not found');
-  }
+const createProjectIntoDB = async (Data: TProject) => {
+  const result = await Project.create(Data);
 
-  // Validate available quantity
-  if (productData.quantity < quantity) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'Insufficient quantity available for sale',
-    );
-  }
+  return result;
+};
+const getAllProjectsFromDB = async () => {
+  const project = await Project.find();
+  return project;
+};
+const getOneProjectFromDB = async (id: string) => {
+  const result = await Project.findById(id);
 
-  // Create a sale record
-  const sale = new Sale({
-    productId,
-    quantity,
-    buyerName,
-    saleDate,
+  return result;
+};
+const updateProjectFromDB = async (
+  id: string,
+  updatedProjectData: Partial<TProject>,
+): Promise<TProject | null> => {
+  const { ...remainingStudentData } = updatedProjectData;
+
+  const modifiedUpdatedData: Record<string, unknown> = {
+    ...remainingStudentData,
+  };
+
+  const result = await Project.findByIdAndUpdate(id, modifiedUpdatedData, {
+    new: true,
+    runValidators: true,
   });
 
-  // Update the inventory
-  productData.quantity -= quantity;
-
-  // Remove product if quantity reaches zero
-  if (productData.quantity === 0) {
-    await Blog.findByIdAndDelete(productId);
-  } else {
-    await productData.save();
-  }
-
-  const savedSaleResult = await sale.save();
-
-  return savedSaleResult;
+  return result;
 };
+const deleteOneProjectFromDB = async (id: string) => {
+  const result = await Project.findByIdAndDelete(id);
 
-const getSaleHistoryFromDB = async () => {
-  // const result = await Sale.find().populate(
-  //   'createdBy',
-  //   '_id username email role',
-  // );
-
-  const weeklyData = await Sale.aggregate([
-    {
-      $group: {
-        _id: { $week: '$saleDate' },
-        totalSales: { $sum: '$quantity' },
-      },
-    },
-  ]);
-
-  const dailyData = await Sale.aggregate([
-    {
-      $group: {
-        _id: { $dayOfMonth: '$saleDate' },
-        totalSales: { $sum: '$quantity' },
-      },
-    },
-  ]);
-
-  const monthlyData = await Sale.aggregate([
-    {
-      $group: {
-        _id: { $month: '$saleDate' },
-        totalSales: { $sum: '$quantity' },
-      },
-    },
-  ]);
-
-  const yearlyData = await Sale.aggregate([
-    {
-      $group: {
-        _id: { $year: '$saleDate' },
-        totalSales: { $sum: '$quantity' },
-      },
-    },
-  ]);
-
-  const result = {
-    weekly: weeklyData,
-    daily: dailyData,
-    monthly: monthlyData,
-    yearly: yearlyData,
-  };
   return result;
 };
 
-export const CategoryService = {
-  createSalesIntoDB,
-  getSaleHistoryFromDB,
+export const ProjectService = {
+  createProjectIntoDB,
+  getAllProjectsFromDB,
+  getOneProjectFromDB,
+  updateProjectFromDB,
+  deleteOneProjectFromDB,
 };

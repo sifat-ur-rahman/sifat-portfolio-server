@@ -1,17 +1,32 @@
 import express from 'express';
-import { SalesControllers } from './project.controller';
-import saleValidationSchema from './sale.validation';
+
 import validateRequest from '../../middlewares/validateRequest';
+
+import { ProjectControllers } from './project.controller';
+import { projectValidationSchema } from './project.validation';
+
 //import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
 router.post(
-  '/api/sales',
+  '/api/project',
   //auth('user'),
-  validateRequest(saleValidationSchema),
-  SalesControllers.createSales,
+  validateRequest(projectValidationSchema.projectValidation),
+  ProjectControllers.createProject,
 );
-router.get('/api/sales-history', SalesControllers.getSaleHistory);
+
+router.get('/api/projects', ProjectControllers.getAllProjects);
+
+router.get('/api/project/:projectId', ProjectControllers.getOneProject);
+
+router.delete('/api/project/:projectId', ProjectControllers.deletedProject);
+
+router.put(
+  '/api/project/:projectId',
+  //auth('user'),
+  validateRequest(projectValidationSchema.projectUpdateValidationSchema),
+  ProjectControllers.updateProject,
+);
 
 export const SaleRoute = router;

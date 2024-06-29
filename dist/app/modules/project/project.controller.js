@@ -9,16 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SalesControllers = void 0;
+exports.ProjectControllers = void 0;
 const project_service_1 = require("./project.service");
-const createSales = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const createProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const saleData = req.body;
-        const result = yield project_service_1.CategoryService.createSalesIntoDB(saleData);
+        const ProjectData = req.body;
+        const result = yield project_service_1.ProjectService.createProjectIntoDB(ProjectData);
         res.status(201).json({
             success: true,
             statusCode: 201,
-            message: 'Sale created successfully',
+            message: 'project created successfully',
             data: result,
         });
     }
@@ -26,13 +26,13 @@ const createSales = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         next(err);
     }
 });
-const getSaleHistory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllProjects = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield project_service_1.CategoryService.getSaleHistoryFromDB();
+        const result = yield project_service_1.ProjectService.getAllProjectsFromDB();
         res.status(200).json({
             success: true,
             statusCode: 200,
-            message: 'Sales History retrieved successfully',
+            message: 'project retrieved successfully',
             data: result,
         });
     }
@@ -40,7 +40,58 @@ const getSaleHistory = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         next(err);
     }
 });
-exports.SalesControllers = {
-    createSales,
-    getSaleHistory,
+const getOneProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield project_service_1.ProjectService.getOneProjectFromDB(id);
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            message: 'Project By ID retrieved successfully',
+            data: result,
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+const updateProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.blogId;
+        const updatedProjectData = req.body;
+        const result = yield project_service_1.ProjectService.updateProjectFromDB(id, updatedProjectData);
+        res.status(200).json({
+            success: true,
+            statusCode: 200,
+            message: 'Project updated successfully',
+            data: result,
+        });
+    }
+    catch (err) {
+        next(err);
+    }
+});
+const deletedProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield project_service_1.ProjectService.deleteOneProjectFromDB(id);
+        if (result) {
+            res.status(200).json({
+                success: true,
+                statusCode: 200,
+                message: 'Project delete successfully',
+                data: null,
+            });
+        }
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.ProjectControllers = {
+    createProject,
+    getAllProjects,
+    getOneProject,
+    updateProject,
+    deletedProject,
 };

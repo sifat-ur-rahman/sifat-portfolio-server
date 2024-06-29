@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import mongoose from 'mongoose';
 import { TBlog } from './blog.interface';
 import { Blog } from './blog.model';
 import AppError from '../../errors/AppError';
