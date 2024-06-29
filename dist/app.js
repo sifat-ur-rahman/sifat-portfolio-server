@@ -15,7 +15,7 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)({ origin: 'https://merry-torte-663ccf.netlify.app', credentials: true }));
 //application route.
 app.use('/', blog_route_1.BlogRoute);
-app.use('/', project_route_1.SaleRoute);
+app.use('/', project_route_1.ProjectRoute);
 app.use('/', user_route_1.UserRoute);
 app.use('/', auth_route_1.AuthRoutes);
 app.get('/', (req, res) => {

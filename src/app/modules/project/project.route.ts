@@ -29,4 +29,4 @@ router.put(
   ProjectControllers.updateProject,
 );
 
-export const SaleRoute = router;
+export const ProjectRoute = router;

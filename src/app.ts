@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 
-import { SaleRoute } from './app/modules/project/project.route';
+import { ProjectRoute } from './app/modules/project/project.route';
 
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import { BlogRoute } from './app/modules/blog/blog.route';
@@ -18,7 +18,7 @@ app.use(
 //application route.
 
 app.use('/', BlogRoute);
-app.use('/', SaleRoute);
+app.use('/', ProjectRoute);
 
 app.use('/', UserRoute);
 app.use('/', AuthRoutes);
