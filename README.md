@@ -1,4 +1,4 @@
-# assignment-5 Electric gadgets Management Dashboard server
+# Sifat Portfolio Management Dashboard server
 
 ## Run the server application locally
 
