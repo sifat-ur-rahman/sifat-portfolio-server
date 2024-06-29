@@ -45,8 +45,8 @@ const getOneProject = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
-    const result = await ProjectService.getOneProjectFromDB(id);
+    const { projectId } = req.params;
+    const result = await ProjectService.getOneProjectFromDB(projectId);
 
     res.status(200).json({
       success: true,
@@ -65,7 +65,7 @@ const updateProject = async (
   next: NextFunction,
 ) => {
   try {
-    const id = req.params.blogId;
+    const id = req.params.projectId;
     const updatedProjectData = req.body;
     const result = await ProjectService.updateProjectFromDB(
       id,
@@ -88,8 +88,8 @@ const deletedProject = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
-    const result = await ProjectService.deleteOneProjectFromDB(id);
+    const { projectId } = req.params;
+    const result = await ProjectService.deleteOneProjectFromDB(projectId);
     if (result) {
       res.status(200).json({
         success: true,

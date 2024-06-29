@@ -21,13 +21,7 @@ const updateProjectFromDB = async (
   id: string,
   updatedProjectData: Partial<TProject>,
 ): Promise<TProject | null> => {
-  const { ...remainingStudentData } = updatedProjectData;
-
-  const modifiedUpdatedData: Record<string, unknown> = {
-    ...remainingStudentData,
-  };
-
-  const result = await Project.findByIdAndUpdate(id, modifiedUpdatedData, {
+  const result = await Project.findByIdAndUpdate(id, updatedProjectData, {
     new: true,
     runValidators: true,
   });

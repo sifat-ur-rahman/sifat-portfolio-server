@@ -9,17 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProjectService = void 0;
 const project_model_1 = require("./project.model");
@@ -36,9 +25,7 @@ const getOneProjectFromDB = (id) => __awaiter(void 0, void 0, void 0, function* 
     return result;
 });
 const updateProjectFromDB = (id, updatedProjectData) => __awaiter(void 0, void 0, void 0, function* () {
-    const remainingStudentData = __rest(updatedProjectData, []);
-    const modifiedUpdatedData = Object.assign({}, remainingStudentData);
-    const result = yield project_model_1.Project.findByIdAndUpdate(id, modifiedUpdatedData, {
+    const result = yield project_model_1.Project.findByIdAndUpdate(id, updatedProjectData, {
         new: true,
         runValidators: true,
     });

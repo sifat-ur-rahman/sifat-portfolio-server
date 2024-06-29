@@ -42,8 +42,8 @@ const getAllProjects = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 const getOneProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id } = req.params;
-        const result = yield project_service_1.ProjectService.getOneProjectFromDB(id);
+        const { projectId } = req.params;
+        const result = yield project_service_1.ProjectService.getOneProjectFromDB(projectId);
         res.status(200).json({
             success: true,
             statusCode: 200,
@@ -57,7 +57,7 @@ const getOneProject = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 });
 const updateProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.blogId;
+        const id = req.params.projectId;
         const updatedProjectData = req.body;
         const result = yield project_service_1.ProjectService.updateProjectFromDB(id, updatedProjectData);
         res.status(200).json({
@@ -73,8 +73,8 @@ const updateProject = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 });
 const deletedProject = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id } = req.params;
-        const result = yield project_service_1.ProjectService.deleteOneProjectFromDB(id);
+        const { projectId } = req.params;
+        const result = yield project_service_1.ProjectService.deleteOneProjectFromDB(projectId);
         if (result) {
             res.status(200).json({
                 success: true,
