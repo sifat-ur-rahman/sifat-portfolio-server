@@ -12,8 +12,18 @@ const user_route_1 = require("./app/modules/user/user.route");
 const auth_route_1 = require("./app/modules/auth/auth.route");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({ origin: ['http://localhost:5173', 'http://localhost:3000'], credentials: true }));
-//
+app.use((0, cors_1.default)({
+    origin: [
+        'https://sifat-portfolio-dashboard.vercel.app',
+        'http://localhost:3000',
+    ],
+    credentials: true,
+}));
+// app.use(
+//   cors({
+//     origin: '*',
+//   }),
+// );
 //application route.
 app.use('/', blog_route_1.BlogRoute);
 app.use('/', project_route_1.ProjectRoute);
